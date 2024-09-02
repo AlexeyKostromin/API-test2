@@ -9,6 +9,9 @@ import io.restassured.http.Method;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
@@ -25,6 +28,17 @@ public class ApiEndpoints {
         return response.as(GetResourceResponse.class);
     }
 
+    @Step("Get all posts")
+    public List<Post> getAllPosts(int expectedStatusCode) {
+        Response response = new BaseRequest()
+                .executeRequest(Method.GET, ModulePath.TEST_API_POSTS, "")
+                .then().extract().response();
+
+        assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
+
+        return Arrays.asList(response.as(Post[].class));
+    }
+
     @Step("Create new post")
     public PostCreateResourceResponse createNewPost(PostCreateResourceRequest request, int expectedStatusCode) {
         Response response = new BaseRequest()
@@ -36,6 +50,7 @@ public class ApiEndpoints {
 
         return response.as(PostCreateResourceResponse.class);
     }
+
 
     @Step("Update post")
     public PutUpdateResourceResponse updatePost(PutUpdateResourceRequest request, int expectedStatusCode) {

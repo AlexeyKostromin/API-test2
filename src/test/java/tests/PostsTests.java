@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
@@ -37,15 +36,13 @@ public class PostsTests extends BaseTest {
     @Test
     @DisplayName("Check can get post by id")
     public void canGetPostByIdTest() {
-        step("Single user request", () -> {
-            String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
+        String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
 
-            GetResourceResponse post = testApiEndpoints.getPost(randomPostId, 200);
+        GetResourceResponse post = testApiEndpoints.getPost(randomPostId, 200);
 
-            assertThat(post.getId()).isEqualTo(randomPostId);
-            assertThat(post.getTitle()).isNotBlank();
-            assertThat(post.getBody()).isNotBlank();
-        });
+        assertThat(post.getId()).isEqualTo(randomPostId);
+        assertThat(post.getTitle()).isNotBlank();
+        assertThat(post.getBody()).isNotBlank();
     }
 
     @Test

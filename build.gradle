@@ -23,6 +23,7 @@ dependencies {
     testImplementation 'org.slf4j:slf4j-api:2.0.13'
     testImplementation 'ch.qos.logback:logback-classic:1.5.6'
 
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
     testImplementation "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
@@ -35,16 +36,5 @@ test {
     systemProperties(System.getProperties())
 
 
-//    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
-//    systemProperty 'allure.results.directory', "${buildDir}/allure-results"
-//
-//    finalizedBy 'allureReport'
 }
 
-//task cleanAllureReport(type: Delete) {
-//    delete "${buildDir}/reports/allure-report"
-//}
-//
-//tasks.named('allureReport') {
-//    dependsOn cleanAllureReport
-//}
