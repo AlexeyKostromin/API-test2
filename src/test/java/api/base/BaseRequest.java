@@ -3,15 +3,14 @@ package api.base;
 import api.env.EnvSettings;
 import api.json.JsonPayloadHandler;
 import api.services.ModulePath;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
 
+import static api.specs.RequestSpec.requestSpec;
 import static io.restassured.RestAssured.given;
 
 @Slf4j
@@ -20,13 +19,7 @@ public class BaseRequest {
 
     public BaseRequest() {
         requestSpecification = given()
-                .spec(new RequestSpecBuilder()
-                        .setUrlEncodingEnabled(false)
-                        .build())
-                .log().method()
-                .log().body()
-                .log().uri()
-                .log().headers();
+                .spec(requestSpec);
     }
 
     private String getUrl(ModulePath modulePath, String path) {
@@ -54,7 +47,7 @@ public class BaseRequest {
     }
 
     public Response executeRequest(Method method, ModulePath modulePath, String route) {
-        log.info("Sending request to: {}", getUrl(modulePath, route));
+        log.info("Sending request to: ");
 
         return requestSpecification.request(method, getUrl(modulePath, route));
     }

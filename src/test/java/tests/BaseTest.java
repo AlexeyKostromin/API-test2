@@ -20,10 +20,9 @@ public class BaseTest {
 
 
     private void logRunningTestName(TestInfo testInfo) {
-        String methodName = testInfo.getTestMethod().orElseThrow().getName();
-        String testName = testInfo.getDisplayName();
-        log.info("Starting test: {}", methodName);
-        log.info("Test description: {}", testName);
+        log.info("--------------");
+        log.info("Starting test: {}", testInfo.getTestMethod().orElseThrow().getName());
+        log.info("Test description: {}", testInfo.getDisplayName());
         log.info("--------------");
     }
 

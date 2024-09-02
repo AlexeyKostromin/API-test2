@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("io.qameta.allure") version "2.11.2"
 }
 
 group = 'org.apisample'
@@ -25,8 +26,25 @@ dependencies {
     testImplementation "org.projectlombok:lombok:$lombokVersion"
     annotationProcessor "org.projectlombok:lombok:$lombokVersion"
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.25.0'
 }
 
 test {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
+
+
+//    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+//    systemProperty 'allure.results.directory', "${buildDir}/allure-results"
+//
+//    finalizedBy 'allureReport'
 }
+
+//task cleanAllureReport(type: Delete) {
+//    delete "${buildDir}/reports/allure-report"
+//}
+//
+//tasks.named('allureReport') {
+//    dependsOn cleanAllureReport
+//}
