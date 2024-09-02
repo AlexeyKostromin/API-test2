@@ -1,7 +1,7 @@
 package tests;
 
-import endpoints.ApiEndpoints;
-import endpoints.ApiRequestGenerator;
+import endpoints.posts.PostUtilMethods;
+import endpoints.posts.PostUtilData;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -9,9 +9,8 @@ import org.junit.jupiter.api.TestInfo;
 @Slf4j
 public class BaseTest {
 
-    protected static ApiEndpoints testApiEndpoints = new ApiEndpoints();
-    protected static ApiRequestGenerator testApiRequestGenerator = new ApiRequestGenerator(testApiEndpoints);
-
+    protected static PostUtilMethods postUtilMethods = new PostUtilMethods();
+    protected static PostUtilData postUtilData = new PostUtilData();
 
     @BeforeEach
     public void beforeEachTest(TestInfo testInfo) {

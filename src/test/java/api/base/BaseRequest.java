@@ -2,7 +2,7 @@ package api.base;
 
 import api.env.EnvSettings;
 import api.json.JsonPayloadHandler;
-import api.services.ModulePath;
+import api.env.ModulePath;
 import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;

@@ -1,35 +1,30 @@
-package endpoints;
+package endpoints.posts;
 
 import api.models.posts.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-public class ApiRequestGenerator {
-
-    final ApiEndpoints apiEndpoints;
-
-
-    public ApiRequestGenerator(ApiEndpoints apiEndpoints) {
-        this.apiEndpoints = apiEndpoints;
+public class PostUtilData {
+    public PostUtilData() {
     }
 
-    public PostCreateResourceRequest createNewPostRequest(String userId, String title, String body) {
+    public Post newPostData(String userId, String title, String body) {
         long time = System.currentTimeMillis();
 
         String uniqueTitle = String.format(title + " " + time);
 
-        return PostCreateResourceRequest.builder()
+        return Post.builder()
                 .title(uniqueTitle)
                 .body(body)
                 .userId(userId)
                 .build();
     }
 
-    public PutUpdateResourceRequest createUpdatePostRequest(String postId, String userId, String title, String body) {
+    public Post createUpdatePostRequest(String postId, String userId, String title, String body) {
         long time = System.currentTimeMillis();
 
         String uniqueTitle = String.format(title + " " + time);
 
-        return PutUpdateResourceRequest.builder()
+        return Post.builder()
                 .id(postId)
                 .title(uniqueTitle)
                 .body(body)
@@ -38,8 +33,8 @@ public class ApiRequestGenerator {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public PatchUpdateResourceRequest createPatchPostRequest(String postId, String userId, String title, String body) {
-        var builder = PatchUpdateResourceRequest.builder();
+    public Post createPatchPostRequest(String postId, String userId, String title, String body) {
+        var builder = Post.builder();
 
         if (postId == null) {
             throw new IllegalArgumentException("postId is required and cannot be null!");

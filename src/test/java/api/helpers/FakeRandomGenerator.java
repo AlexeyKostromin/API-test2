@@ -1,4 +1,4 @@
-package api.generator;
+package api.helpers;
 
 import java.util.Random;
 

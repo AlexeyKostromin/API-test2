@@ -1,9 +1,9 @@
-package endpoints;
+package endpoints.posts;
 
 
 import api.base.BaseRequest;
 import api.models.posts.*;
-import api.services.ModulePath;
+import api.env.ModulePath;
 import io.qameta.allure.Step;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
@@ -15,17 +15,17 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-public class ApiEndpoints {
+public class PostUtilMethods {
 
     @Step("Get post by Id")
-    public GetResourceResponse getPost(String postId, int expectedStatusCode) {
+    public Post getPost(String postId, int expectedStatusCode) {
         Response response = new BaseRequest()
                 .executeRequest(Method.GET, ModulePath.TEST_API_POSTS, String.format("/%s", postId))
                 .then().extract().response();
 
         assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
 
-        return response.as(GetResourceResponse.class);
+        return response.as(Post.class);
     }
 
     @Step("Get all posts")
@@ -40,7 +40,7 @@ public class ApiEndpoints {
     }
 
     @Step("Create new post")
-    public PostCreateResourceResponse createNewPost(PostCreateResourceRequest request, int expectedStatusCode) {
+    public Post createNewPost(Post request, int expectedStatusCode) {
         Response response = new BaseRequest()
                 .body(request)
                 .executeRequest(Method.POST, ModulePath.TEST_API_POSTS, "")
@@ -48,12 +48,12 @@ public class ApiEndpoints {
 
         assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
 
-        return response.as(PostCreateResourceResponse.class);
+        return response.as(Post.class);
     }
 
 
     @Step("Update post")
-    public PutUpdateResourceResponse updatePost(PutUpdateResourceRequest request, int expectedStatusCode) {
+    public Post updatePost(Post request, int expectedStatusCode) {
         Response response = new BaseRequest()
                 .body(request)
                 .executeRequest(Method.PUT, ModulePath.TEST_API_POSTS, String.format("/%s", request.getId()))
@@ -61,11 +61,11 @@ public class ApiEndpoints {
 
         assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
 
-        return response.as(PutUpdateResourceResponse.class);
+        return response.as(Post.class);
     }
 
     @Step("Patch post")
-    public PatchUpdateResourceResponse patchPost(PatchUpdateResourceRequest request, int expectedStatusCode) {
+    public Post patchPost(Post request, int expectedStatusCode) {
         Response response = new BaseRequest()
                 .body(request)
                 .executeRequest(Method.PATCH, ModulePath.TEST_API_POSTS, String.format("/%s", request.getId()))
@@ -73,7 +73,7 @@ public class ApiEndpoints {
 
         assertThat(response.statusCode()).isEqualTo(expectedStatusCode);
 
-        return response.as(PatchUpdateResourceResponse.class);
+        return response.as(Post.class);
     }
 
     @Step("Delete post")

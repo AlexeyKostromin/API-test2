@@ -1,4 +1,4 @@
-package api.services;
+package api.env;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,10 +1,11 @@
-package tests;
+package tests.posts;
 
 import api.models.posts.Post;
 import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tests.BaseTest;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class TopFrequentWordsTest extends BaseTest {
     @Test
     @DisplayName("Print top 10 frequent words from post`s bodies")
     public void getTopTenFrequentWordsFromBodyTest() {
-        List<Post> allPosts = testApiEndpoints.getAllPosts(200);
+        List<Post> allPosts = postUtilMethods.getAllPosts(200);
 
         List<String> bodies = new ArrayList<>();
         for (Post post : allPosts) {

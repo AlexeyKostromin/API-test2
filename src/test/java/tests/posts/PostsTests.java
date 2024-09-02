@@ -1,13 +1,14 @@
-package tests;
+package tests.posts;
 
 import api.enums.PostBodyOptions;
 import api.enums.PostTitleOptions;
-import api.generator.FakeRandomGenerator;
+import api.helpers.FakeRandomGenerator;
 import api.models.posts.*;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tests.BaseTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,8 +22,8 @@ public class PostsTests extends BaseTest {
         String body = FakeRandomGenerator.getRandomOption(PostBodyOptions.class).getValue();
         String randomUser = FakeRandomGenerator.getRandomValueAsString(1, 10);
 
-        PostCreateResourceRequest request = testApiRequestGenerator.createNewPostRequest(randomUser, title, body);
-        PostCreateResourceResponse response = testApiEndpoints.createNewPost(request, 201);
+        Post request = postUtilData.newPostData(randomUser, title, body);
+        Post response = postUtilMethods.createNewPost(request, 201);
 
         assertThat(response.getId()).isNotNull();
 
@@ -38,7 +39,7 @@ public class PostsTests extends BaseTest {
     public void canGetPostByIdTest() {
         String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
 
-        GetResourceResponse post = testApiEndpoints.getPost(randomPostId, 200);
+        Post post = postUtilMethods.getPost(randomPostId, 200);
 
         assertThat(post.getId()).isEqualTo(randomPostId);
         assertThat(post.getTitle()).isNotBlank();
@@ -53,8 +54,8 @@ public class PostsTests extends BaseTest {
         String randomUser = FakeRandomGenerator.getRandomValueAsString(1, 10);
         String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
 
-        PutUpdateResourceRequest request = testApiRequestGenerator.createUpdatePostRequest(randomPostId, randomUser, title, body);
-        PutUpdateResourceResponse response = testApiEndpoints.updatePost(request, 200);
+        Post request = postUtilData.createUpdatePostRequest(randomPostId, randomUser, title, body);
+        Post response = postUtilMethods.updatePost(request, 200);
 
         assertThat(response.getId()).isEqualTo(request.getId());
         assertThat(response.getTitle()).isEqualTo(request.getTitle());
@@ -68,12 +69,12 @@ public class PostsTests extends BaseTest {
     @DisplayName("Check the post title can be updated")
     public void canUpdatePostTitleTest() {
         String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
-        GetResourceResponse postBefore = testApiEndpoints.getPost(randomPostId, 200);
+        Post postBefore = postUtilMethods.getPost(randomPostId, 200);
 
         String titleUpdated = FakeRandomGenerator.getRandomOption(PostTitleOptions.class).getValue();
 
-        PatchUpdateResourceRequest request = testApiRequestGenerator.createPatchPostRequest(randomPostId, null, titleUpdated, null);
-        PatchUpdateResourceResponse postAfter = testApiEndpoints.patchPost(request, 200);
+        Post request = postUtilData.createPatchPostRequest(randomPostId, null, titleUpdated, null);
+        Post postAfter = postUtilMethods.patchPost(request, 200);
 
         assertThat(postBefore.getTitle()).isNotEqualTo(postAfter.getTitle());
         assertThat(request.getTitle()).isEqualTo(postAfter.getTitle());
@@ -88,13 +89,13 @@ public class PostsTests extends BaseTest {
     @DisplayName("Check can delete post")
     public void canDeletePostTest() {
         String randomPostId = FakeRandomGenerator.getRandomValueAsString(1, 100);
-        GetResourceResponse randomPost = testApiEndpoints.getPost(randomPostId, 200);
+        Post randomPost = postUtilMethods.getPost(randomPostId, 200);
 
         assertThat(randomPost.getId()).isEqualTo(randomPostId);
         assertThat(randomPost.getTitle()).isNotBlank();
         assertThat(randomPost.getBody()).isNotBlank();
 
-        Response response = testApiEndpoints.deletePost(randomPostId, 200);
+        Response response = postUtilMethods.deletePost(randomPostId, 200);
 
         assertThat(response.getBody().asString()).isEqualTo("{}");
 
