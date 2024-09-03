@@ -1,10 +1,13 @@
 This is a solution for an API test for the https://jsonplaceholder.typicode.com/ endpoint.
 Only CRUD tests for **/posts** resource are represented here.
 
-To run all tests, use the command:
+To clone this repository use command:
+`git clone https://github.com/AlexeyKostromin/API-test2.git`
+
+To run all tests, use command:
 `gradle clean test`
 
-To generate an allure report, use the command:
+To generate an allure report, use command:
 `gradle allureServe`
 
 The result should be like this:
