@@ -23,7 +23,6 @@ public class BaseRequest {
     }
 
     private String getUrl(ModulePath modulePath, String path) {
-        EnvSettings.setBaseUrl();
         String baseURL = System.getProperty("baseTypicodeApiUrl");
 
         return baseURL
